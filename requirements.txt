@@ -41,3 +41,4 @@ webencodings==0.5.1
 wheel==0.37.0
 gunicorn==20.1.0
 djangorestframework-simplejwt==5.2.2
+pydevd-pycharm==231.7515.12

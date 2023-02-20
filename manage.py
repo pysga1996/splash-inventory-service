@@ -4,6 +4,14 @@ import os
 import sys
 from django.core.management.commands.runserver import Command as runserver
 
+# ==============this code added==================================================================:
+import pydevd_pycharm
+
+if os.getenv('REMOTE_DEBUG') == 'True':
+    pydevd_pycharm.settrace('host.docker.internal', port=12345, stdoutToServer=True, stderrToServer=True)
+
+
+# ================================================================================================
 
 def main():
     """Run administrative tasks."""

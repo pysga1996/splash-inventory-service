@@ -13,6 +13,8 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+from rest_framework.pagination import PageNumberPagination
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -77,14 +79,14 @@ WSGI_APPLICATION = 'spooky_user_service.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'revice',
+        'NAME': os.getenv('DB_NAME', 'revice'),
         'OPTIONS': {
-            'options': '-c search_path=spooky_user'
+            'options': "-c search_path={}".format(os.getenv('DB_SCHEMA', 'spooky_user'))
         },
-        'USER': 'postgres',
-        'PASSWORD': 'v3ng34nc3',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'USER': os.getenv('DB_USERNAME', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'changeme'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
@@ -164,5 +166,6 @@ REST_FRAMEWORK = {
         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication',
     ),
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_PAGINATION_CLASS': PageNumberPagination
 }
